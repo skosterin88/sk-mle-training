@@ -1,0 +1,8 @@
+model_params:
+    url: "https://api-inference.huggingface.co/models/hustvl/yolos-small"
+    hf_access_token: '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'
+    headers: {"Authorization": "Bearer {hf_access_token}"}
+input_params:
+    default_image: 'cats.jpg'
+output_params:
+    output_file_name: 'output.json'
