@@ -5,6 +5,8 @@ import requests
 import json
 import yaml
 from pathlib import Path
+from dotenv import load_dotenv
+import os
 
 from yolo_call import query
 
@@ -12,6 +14,10 @@ from yolo_call import query
 
 def main():
 
+    load_dotenv()
+    
+    hf_access_token = os.getenv('hf_access_token')
+    
     config = yaml.safe_load(Path('config.yaml').read_text())
 
     model_config = config['model_params']
@@ -19,7 +25,7 @@ def main():
     output_config = config['output_params']
 
     model_url = model_config['url']
-    hf_access_token = model_config['hf_access_token']
+    # hf_access_token = model_config['hf_access_token']
     headers = model_config['headers']
     headers['Authorization'] = headers['Authorization']\
     .format(hf_access_token=hf_access_token)
