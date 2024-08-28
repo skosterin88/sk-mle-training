@@ -1,17 +1,21 @@
-# syntax=docker/dockerfile:1
+FROM ubuntu:latest
+LABEL maintainer="Sergei Kosterin <skosterin88@gmail.com>"
 
-# Base image
-FROM ubuntu:20.04
-
-# Install dependencies
-RUN apt-get -qq update && apt-get -y install python python3 pip python3-pip
-
-WORKDIR /usr/bin/sk_hw_containerization
-
+RUN apt-get update 
+RUN apt-get install -y sudo curl git zsh wget nano
+RUN apt-get install -y python-is-python3 python3 pip python3-pip
+RUN adduser --quiet --disabled-password --shell /bin/zsh --home /home/devuser --gecos User devuser
+RUN echo "devuser:p@ssword1" | chpasswd 
+RUN usermod -aG sudo devuser
+    
 # Copy source files
-COPY requirements.txt yolo_call.py main.py config.yaml cats.jpg ./
-RUN pip install -r requirements.txt
+COPY requirements.txt config.yaml /home/devuser
 
-#Launch app
-CMD ["python3", "-m", "main"]
+WORKDIR /home/devuser
 
+USER devuser
+ENV TERM=xterm
+
+RUN pip install -r requirements.txt --break-system-packages
+
+CMD ["zsh"]

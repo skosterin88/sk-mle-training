@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import sys
 import requests
 import json
 import yaml
@@ -23,7 +24,18 @@ def main():
     headers['Authorization'] = headers['Authorization']\
     .format(hf_access_token=hf_access_token)
     
-    input_filename = input_config['default_image']
+    args = sys.argv
+    
+    default_image = input_config['default_image']
+    
+    if len(args) > 1:
+    
+    	input_filename = args[1]
+    
+    else:
+    
+    	input_filename = default_image
+    	
     output_filename = output_config['output_file_name']
 
     output_dict = {}
@@ -33,7 +45,7 @@ def main():
 
     with open(output_filename, 'w', encoding='utf-8') as f:
 
-        json.dump(output_dict, f, ensure_ascii=False)
+       json.dump(output_dict, f, ensure_ascii=False)
         
     print(f'Output saved to {output_filename}!')
     print('Results of model usage:')
