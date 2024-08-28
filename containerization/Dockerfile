@@ -17,6 +17,6 @@ WORKDIR /home/devuser
 USER devuser
 ENV TERM=xterm
 
-RUN pip install -r requirements.txt --break-system-packages
+RUN pip install -r requirements.txt --break-system-packages --no-cache-dir
 
 CMD ["zsh"]
