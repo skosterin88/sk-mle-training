@@ -1,0 +1,4 @@
+requests
+pathlib
+pyyaml
+python-dotenv
