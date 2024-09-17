@@ -1,6 +1,6 @@
 stages:
-  preprocessing:
-    cmd: python3 -m data_governance cli_preprocessing data_governance/data/train.csv data_governance/data/processed/train.parquet
+  preprocess:
+    cmd: python3 data_governance/preprocess.py 'data_governance/data/train.csv' 'data_governance/data/processed/train.parquet'
     deps:
     - data_governance/data/train.csv
     - data_governance/preprocess.py

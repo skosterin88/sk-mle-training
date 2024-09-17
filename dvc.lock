@@ -1,0 +1,18 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python3 data_governance/preprocess.py 'data_governance/data/train.csv' 'data_governance/data/processed/train.parquet'
+    deps:
+    - path: data_governance/data/train.csv
+      hash: md5
+      md5: 520937107c39a2d1d1f66cd410e9ed9e
+      size: 1585200224
+    - path: data_governance/preprocess.py
+      hash: md5
+      md5: e0bf3bef5f07675893fa63ac854880dc
+      size: 2273
+    outs:
+    - path: data_governance/data/processed/train.parquet
+      hash: md5
+      md5: 4c13c05fbad4e701c20e841ae567ee9d
+      size: 8701131

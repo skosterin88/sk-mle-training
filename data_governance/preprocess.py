@@ -1,5 +1,6 @@
 
 import re
+import sys
 from pathlib import Path
 
 import click
@@ -8,7 +9,7 @@ import polars as pl
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
-from .cli import cli
+# from .cli import cli
 
 
 
@@ -19,11 +20,11 @@ def preprocess_text(input_text: str) -> str:
     text = input_text.lower()
     
     # delete hyperlinks
-    text = re.sub(r'https?://\S+|www\.\S+|\[.*?\]|[^a-zA-Z\s]+|\w*\d\w*', "", text)
+    text = re.sub(pattern=r'https?://\S+|www\.\S+|\[.*?\]|[^a-zA-Z\s]+|\w*\d\w*', repl="", string=text)
     # delete special symbols
-    text = re.sub("[0-9 \-_]+", " ", text)
+    text = re.sub(pattern="[0-9 \-_]+", repl=" ", string=text)
     # leave letters only
-    text = re.sub("^[a-z A-Z]+")
+    text = re.sub(pattern="^[a-z A-Z]+", repl=" ", string=text)
     # delete stopwords
     text = " ".join([word for word in text.split() if word not in stopwords.words("english")])
 
@@ -33,11 +34,11 @@ def lemmatize(input_frame: pl.DataFrame) -> pl.DataFrame:
 
     lemmatizer = WordNetLemmatizer()
 
-    return input_frame.with_columns(pl.with_column(
+    return input_frame.with_columns(
         pl.col('corpus').map_elements(
             lambda input_list: [lemmatizer.lemmatize(token) for token in input_list])
         )
-    )
+    
 
 def preprocess_dataframe(data: pl.DataFrame, col_name: str) -> pl.DataFrame:
 
@@ -50,17 +51,13 @@ def preprocess_dataframe(data: pl.DataFrame, col_name: str) -> pl.DataFrame:
         )
     )
 
-# Run preprocessing from the console for DVC to be able to include this in dvc repro pipeline
-@cli.command()
-@click.argument("input_frame_path", type=Path)
-@click.argument("output_frame_path", type=Path)
-@click.argument("column", type=str, default="Review")
-def cli_preprocessing(input_frame_path: Path, 
+# # Run preprocessing from the console for DVC to be able to include this in dvc repro pipeline
+def run_preprocessing(input_frame_path: Path, 
                       output_frame_path: Path, 
-                      column: str) -> None:
+                      column: str = 'Review') -> None:
 
     nltk.download('stopwords')
-
+    nltk.download('wordnet')
     # read raw data
     data = pl.read_csv(
         input_frame_path,
@@ -72,3 +69,11 @@ def cli_preprocessing(input_frame_path: Path,
     processed_data = preprocess_dataframe(data, column)
     # save the data to parquet file
     processed_data.write_parquet(output_frame_path)
+
+
+if __name__ == "__main__":
+
+    input_frame_path = Path(sys.argv[1])
+    output_frame_path = Path(sys.argv[2])
+
+    run_preprocessing(input_frame_path, output_frame_path)
