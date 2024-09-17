@@ -9,8 +9,8 @@ stages:
       size: 1585200224
     - path: data_governance/preprocess.py
       hash: md5
-      md5: e0bf3bef5f07675893fa63ac854880dc
-      size: 2273
+      md5: 3c5f5c1ba7070ff4b9118606cbb36ec1
+      size: 2112
     outs:
     - path: data_governance/data/processed/train.parquet
       hash: md5
