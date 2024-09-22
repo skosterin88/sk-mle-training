@@ -9,10 +9,36 @@ stages:
       size: 1585200224
     - path: data_governance/preprocess.py
       hash: md5
-      md5: 3c5f5c1ba7070ff4b9118606cbb36ec1
+      md5: 7830f2efd46d79fc4b345326424a087c
       size: 2112
     outs:
     - path: data_governance/data/processed/train.parquet
       hash: md5
-      md5: 4c13c05fbad4e701c20e841ae567ee9d
-      size: 8701131
+      md5: a0e93d833b765e3358cb513020cbe1da
+      size: 14653046
+  vectorize:
+    cmd: python3 data_governance/vectorize.py 'data_governance/data/processed/train.parquet'
+      'data_governance/models/vectorizer.pickle' 'data_governance/data/features/train.parquet'
+      'data_governance/data/features/test.parquet'
+    deps:
+    - path: data_governance/data/processed/train.parquet
+      hash: md5
+      md5: a0e93d833b765e3358cb513020cbe1da
+      size: 14653046
+    - path: data_governance/vectorize.py
+      hash: md5
+      md5: 086fc28ebe5f73acb1cedfbfc4bd4497
+      size: 1606
+    outs:
+    - path: data_governance/data/features/test.parquet
+      hash: md5
+      md5: 245025d52f60e69528c21b02de42ac5c
+      size: 4543591
+    - path: data_governance/data/features/train.parquet
+      hash: md5
+      md5: 848fedcfaa025f825e8188485e863b1b
+      size: 10625513
+    - path: data_governance/models/vectorizer.pickle
+      hash: md5
+      md5: 86b2157ba47ef4d22c2eb891140e0169
+      size: 1293015

@@ -41,7 +41,7 @@ def vectorize_train(input_frame_path: Path,
     data = pl.read_parquet(input_frame_path)
     print(len(data))
     print(data.columns)
-    print(data[0]['corpus'])
+    print(data[0]['corpus'].item())
     vectorizer, train, test = train_vectorize(data)
     pickle.dump(vectorizer, vectorizer_path.open('wb'))
 

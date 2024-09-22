@@ -24,7 +24,7 @@ def preprocess_text(input_text: str) -> str:
     # delete special symbols
     text = re.sub(pattern="[0-9 \-_]+", repl=" ", string=text)
     # leave letters only
-    text = re.sub(pattern="^[a-z A-Z]+", repl=" ", string=text)
+    text = re.sub(pattern="[^a-z A-Z]+", repl=" ", string=text)
     # delete stopwords
     text = " ".join([word for word in text.split() if word not in stopwords.words("english")])
 
