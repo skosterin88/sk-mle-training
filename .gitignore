@@ -1,0 +1,6 @@
+__pycache__
+data_governance/data/test.csv
+data_governance/data/train.csv
+data_governance/cli.pyc
+data_governance/Untitled.ipynb
+data_governance/.ipynb_checkpoints/Untitled-checkpoint.ipynb

@@ -3,6 +3,9 @@ from sys import argv
 import pickle
 from pathlib import Path
 
+import dvc
+
+import dvc.api
 import polars as pl
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
@@ -13,18 +16,21 @@ def train_vectorize(
         data: pl.DataFrame
 ) -> Tuple[TfidfVectorizer, pl.DataFrame, pl.DataFrame]:
     
-    random_state = 42
-    vectorizer_params = {'max_features': 10000,
-                         'analyzer': 'word'
-                         }
+    # random_state = 42
+    # vectorizer_params = {'max_features': 10000,
+    #                      'analyzer': 'word'
+    #                      }
     
-    tfidf_vectorizer = TfidfVectorizer(**vectorizer_params)
+    params = dvc.api.params_show()
+    print(params)
+    # tfidf_vectorizer = TfidfVectorizer(**vectorizer_params)
+    tfidf_vectorizer = TfidfVectorizer(**params["vectorizer_tfidf"])
 
     train, test = train_test_split(
         data,
-        test_size=0.3,
+        test_size=params["test_train_split"],
         shuffle=True,
-        random_state=random_state
+        random_state=params["random_state"]
     )
 
     tfidf_vectorizer.fit(train['corpus'].list.join(" ").to_numpy())

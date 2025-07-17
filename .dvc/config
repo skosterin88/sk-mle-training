@@ -2,5 +2,6 @@
     remote = myremote
 ['remote "myremote"']
     url = gdrive://1bvFcEsnt1ZUlMN_thgTJcuWOA1N-YYNw
-    gdrive_client_id = 1048873550047-tdp6u0q1mln711tf62lpcpfuncn09hj7.apps.googleusercontent.com
-    gdrive_client_secret = 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
+    gdrive_use_service_account = true
+    gdrive_service_account_json_file = /home/skosterin88/pwds/sk-mle-training-1dc9a7389632.json
+    

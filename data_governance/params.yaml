@@ -1,0 +1,5 @@
+vectorizer_tfidf:
+  max_features: 10000
+  analyzer: "word"
+random_state: 42
+test_train_split: 0.3
