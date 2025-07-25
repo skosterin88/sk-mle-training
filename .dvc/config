@@ -1,0 +1,4 @@
+[core]
+    remote = myremote
+['remote "myremote"']
+    url = s3://epam-learn-mle-sergeikosterin/data_governance/data/
