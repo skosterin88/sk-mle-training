@@ -1,0 +1,8 @@
+stages:
+  preprocessing:
+    cmd: python3 data_governance/code/preprocess.py '/data_governance/data/input/train.csv' '/data_governance/data/processed/train.parquet' 'Review'
+    deps:
+    - data_governance/code/preprocess.py
+    - data_governance/data/input/train.csv
+    outs:
+    - data_governance/data/processed/train.parquet
