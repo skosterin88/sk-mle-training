@@ -6,3 +6,12 @@ stages:
     - data_governance/data/input/train.csv
     outs:
     - data_governance/data/processed/train.parquet
+  vectorize:
+    cmd: python3 data_governance/code/vectorize.py '/data_governance/data/processed/train.parquet' '/data_governance/data/models/vectorizer.pickle' '/data_governance/data/features/train.parquet' '/data_governance/data/features/test.parquet'
+    deps:
+    - data_governance/code/vectorize.py
+    - data_governance/data/processed/train.parquet
+    outs:
+    - data_governance/data/models/vectorizer.pickle
+    - data_governance/data/features/train.parquet
+    - data_governance/data/features/test.parquet
