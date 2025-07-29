@@ -18,14 +18,9 @@ def train_vectorize(
 ) -> Tuple[TfidfVectorizer, pl.DataFrame, pl.DataFrame]:
     
     random_state = 42
-    # params = {
-    #     'max_features': 10000,
-    #     'analyzer': 'word'
-    #     }
     
     params = dvc.api.params_show("data_governance/params.yaml")
-    # print(params)
-    # tfidf_vectorizer = TfidfVectorizer(**params)
+
     tfidf_vectorizer = TfidfVectorizer(**params["vectorizer_tfidf"])
 
     train, test = train_test_split(
@@ -46,9 +41,7 @@ def vectorize_train(input_frame_path: Path,
                     ) -> None:
     
     data = pl.read_parquet(input_frame_path)
-    # print(len(data))
-    # print(data.columns)
-    # print(data[0]['corpus'].item())
+    
     vectorizer, train, test = train_vectorize(data)
     with open(vectorizer_path, 'wb') as f:
         pickle.dump(vectorizer, f)
@@ -58,14 +51,9 @@ def vectorize_train(input_frame_path: Path,
 
 if __name__ == "__main__":
     
-    # input_frame_path = os.getcwd() + sys.argv[1]
-    # vectorizer_path = os.getcwd() + sys.argv[2]
-    # train_features_path = os.getcwd() + sys.argv[3]
-    # test_features_path = os.getcwd() + sys.argv[4]
-
-    input_frame_path = os.getcwd() + '/data_governance/data/processed/train.parquet'
-    vectorizer_path = os.getcwd() + '/data_governance/data/models/vectorizer.pickle'
-    train_features_path = os.getcwd() + '/data_governance/data/features/train.parquet'
-    test_features_path = os.getcwd() + '/data_governance/data/features/test.parquet'
+    input_frame_path = os.getcwd() + sys.argv[1]
+    vectorizer_path = os.getcwd() + sys.argv[2]
+    train_features_path = os.getcwd() + sys.argv[3]
+    test_features_path = os.getcwd() + sys.argv[4]
 
     vectorize_train(input_frame_path, vectorizer_path, train_features_path, test_features_path)

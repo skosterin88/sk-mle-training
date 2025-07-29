@@ -1,0 +1,48 @@
+schema: '2.0'
+stages:
+  preprocessing:
+    cmd: python3 data_governance/code/preprocess.py 
+      '/data_governance/data/input/train.csv' 
+      '/data_governance/data/processed/train.parquet' 'Review'
+    deps:
+    - path: data_governance/code/preprocess.py
+      hash: md5
+      md5: 0623cd0494b451bef11827eb61a4511a
+      size: 2587
+    - path: data_governance/data/input/train.csv
+      hash: md5
+      md5: 520937107c39a2d1d1f66cd410e9ed9e
+      size: 1585200224
+    outs:
+    - path: data_governance/data/processed/train.parquet
+      hash: md5
+      md5: b313374d0b1aa918d2c40562dc2cbd8a
+      size: 14640088
+  vectorize:
+    cmd: python3 data_governance/code/vectorize.py 
+      '/data_governance/data/processed/train.parquet' 
+      '/data_governance/data/models/vectorizer.pickle' 
+      '/data_governance/data/features/train.parquet' 
+      '/data_governance/data/features/test.parquet'
+    deps:
+    - path: data_governance/code/vectorize.py
+      hash: md5
+      md5: 95eee0801cad5023497f0792398aad8e
+      size: 1610
+    - path: data_governance/data/processed/train.parquet
+      hash: md5
+      md5: b313374d0b1aa918d2c40562dc2cbd8a
+      size: 14640088
+    outs:
+    - path: data_governance/data/features/test.parquet
+      hash: md5
+      md5: 57cc9999fe17821e224e4627d49d0ada
+      size: 4539504
+    - path: data_governance/data/features/train.parquet
+      hash: md5
+      md5: 017791b0b71d9b7e052e63a1dd1fd19f
+      size: 10616033
+    - path: data_governance/data/models/vectorizer.pickle
+      hash: md5
+      md5: e9183cc60ebd205912c44a63b99c74d4
+      size: 368037
