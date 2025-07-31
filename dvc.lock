@@ -27,12 +27,19 @@ stages:
     deps:
     - path: data_governance/code/vectorize.py
       hash: md5
-      md5: 568c20d9088e849c08e521c55f66b22d
-      size: 1689
+      md5: 9cc21a61a9bf4880da136bfa0c795a23
+      size: 1660
     - path: data_governance/data/processed/train.parquet
       hash: md5
       md5: b313374d0b1aa918d2c40562dc2cbd8a
       size: 14640088
+    params:
+      data_governance/params.yaml:
+        random_state: 42
+        test_train_split: 0.3
+        vectorizer_tfidf:
+          max_features: 10000
+          analyzer: word
     outs:
     - path: data_governance/data/features/test.parquet
       hash: md5
@@ -138,8 +145,8 @@ stages:
     deps:
     - path: data_governance/code/models.py
       hash: md5
-      md5: 955c86eb6d8d2352705fce7aa37b154f
-      size: 2896
+      md5: c0ddfc5da302ed0fd5ed270ada13d93f
+      size: 2452
     - path: data_governance/data/prepared/train_features.npz
       hash: md5
       md5: 0a0a9047cd775709bfc526bd936714e4
@@ -148,10 +155,17 @@ stages:
       hash: md5
       md5: bde885dc46d3599be1ef22972ab13d76
       size: 280128
+    params:
+      data_governance/params.yaml:
+        logistic_regression:
+          multi_class: multinomial
+          solver: saga
+          C: 2.0
+          random_state: 42
     outs:
     - path: data_governance/data/models/model.pickle
       hash: md5
-      md5: 94bec2a9813bc647f738723e342f7801
+      md5: d1b2ad84c7e33605f897d90678519030
       size: 80730
   evaluate:
     cmd: python3 data_governance/code/evaluate.py 
@@ -166,7 +180,7 @@ stages:
       size: 2008
     - path: data_governance/data/models/model.pickle
       hash: md5
-      md5: 94bec2a9813bc647f738723e342f7801
+      md5: d1b2ad84c7e33605f897d90678519030
       size: 80730
     - path: data_governance/data/prepared/test_features.npz
       hash: md5
@@ -179,5 +193,5 @@ stages:
     outs:
     - path: data_governance/data/metrics/summary.json
       hash: md5
-      md5: f9148c0e74f86659b9a4cb4f22ed9d2d
-      size: 537
+      md5: 1aa76a38c67a37dac4be6ae42b339f84
+      size: 536

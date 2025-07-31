@@ -1,5 +1,10 @@
 vectorizer_tfidf:
   max_features: 10000
   analyzer: "word"
+logistic_regression:
+  multi_class: "multinomial"
+  solver: "saga"
+  C: 2.0
+  random_state: 42
 random_state: 42
 test_train_split: 0.3

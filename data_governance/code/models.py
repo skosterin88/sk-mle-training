@@ -3,6 +3,8 @@ import sys
 import pickle
 from pathlib import Path
 
+import dvc.api
+
 import numpy as np
 import scipy as sp
 from matplotlib import pyplot as plt
@@ -46,13 +48,15 @@ def train(data: np.ndarray, target: np.ndarray) -> LogisticRegression:
     Returns:
     LogisticRegression: The trained logistic regression model.
     """
-    model_params = {
-        'multi_class': 'multinomial',
-        'solver': 'saga',
-        'random_state': 42,
-    }
+    # model_params = {
+    #     'multi_class': 'multinomial',
+    #     'solver': 'saga',
+    #     'random_state': 42,
+    # }
 
-    model_lr = LogisticRegression(**model_params)
+    model_params = dvc.api.params_show()
+
+    model_lr = LogisticRegression(**model_params['logistic_regression'])
     model_lr.fit(data, target)
     
     return model_lr

@@ -8,6 +8,11 @@ stages:
     - data_governance/data/processed/train.parquet
   vectorize:
     cmd: python3 data_governance/code/vectorize.py '/data_governance/data/processed/train.parquet' '/data_governance/data/models/vectorizer.pickle' '/data_governance/data/features/train.parquet' '/data_governance/data/features/test.parquet'
+    params:
+      - data_governance/params.yaml:
+        - vectorizer_tfidf
+        - random_state
+        - test_train_split
     deps:
     - data_governance/code/vectorize.py
     - data_governance/data/processed/train.parquet
@@ -30,6 +35,9 @@ stages:
       - data_governance/data/prepared/${item}_target.npy
   train_model:
     cmd: python3 data_governance/code/models.py '/data_governance/data/prepared/train_features.npz' '/data_governance/data/prepared/train_target.npy' '/data_governance/data/models/model.pickle'
+    params:
+    - data_governance/params.yaml:
+      - logistic_regression
     deps:
     - data_governance/code/models.py
     - data_governance/data/prepared/train_features.npz

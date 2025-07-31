@@ -22,7 +22,7 @@ def train_vectorize(
     
     random_state = 42
     
-    params = dvc.api.params_show("data_governance/params.yaml")
+    params = dvc.api.params_show()
 
     tfidf_vectorizer = TfidfVectorizer(**params["vectorizer_tfidf"])
 
