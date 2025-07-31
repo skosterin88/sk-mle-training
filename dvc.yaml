@@ -15,3 +15,12 @@ stages:
     - data_governance/data/models/vectorizer.pickle
     - data_governance/data/features/train.parquet
     - data_governance/data/features/test.parquet
+  apply_vectorizer:
+    cmd: python3 data_governance/code/apply_vectorizer.py '/data_governance/data/features/train.parquet' '/data_governance/data/models/vectorizer.pickle' '/data_governance/data/prepared/train_features.npz' '/data_governance/data/prepared/train_target.npy'
+    deps:
+    - data_governance/code/apply_vectorizer.py
+    - data_governance/data/features/train.parquet
+    - data_governance/data/models/vectorizer.pickle
+    outs:
+    - data_governance/data/prepared/train_features.npz
+    - data_governance/data/prepared/train_target.npy

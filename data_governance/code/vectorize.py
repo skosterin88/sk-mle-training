@@ -8,8 +8,11 @@ import dvc
 
 import dvc.api
 import polars as pl
+import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
+import scipy as sp
+from typing import List
 from typing import Tuple
 
 
@@ -34,7 +37,7 @@ def train_vectorize(
     return tfidf_vectorizer, train, test
 
 
-def vectorize_train(input_frame_path: Path,
+def run_vectorizer_training(input_frame_path: Path,
                     vectorizer_path: Path,
                     train_features_path: Path,
                     test_features_path: Path
@@ -49,6 +52,7 @@ def vectorize_train(input_frame_path: Path,
     train.write_parquet(train_features_path)
     test.write_parquet(test_features_path)
 
+
 if __name__ == "__main__":
     
     input_frame_path = os.getcwd() + sys.argv[1]
@@ -56,4 +60,4 @@ if __name__ == "__main__":
     train_features_path = os.getcwd() + sys.argv[3]
     test_features_path = os.getcwd() + sys.argv[4]
 
-    vectorize_train(input_frame_path, vectorizer_path, train_features_path, test_features_path)
+    run_vectorizer_training(input_frame_path, vectorizer_path, train_features_path, test_features_path)

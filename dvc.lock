@@ -46,3 +46,31 @@ stages:
       hash: md5
       md5: e9183cc60ebd205912c44a63b99c74d4
       size: 368037
+  apply_vectorizer:
+    cmd: python3 data_governance/code/apply_vectorizer.py 
+      '/data_governance/data/features/train.parquet' 
+      '/data_governance/data/models/vectorizer.pickle' 
+      '/data_governance/data/prepared/train_features.npz' 
+      '/data_governance/data/prepared/train_target.npy'
+    deps:
+    - path: data_governance/code/apply_vectorizer.py
+      hash: md5
+      md5: ef0bf328a07833e6115430953ad6beb9
+      size: 1257
+    - path: data_governance/data/features/train.parquet
+      hash: md5
+      md5: 017791b0b71d9b7e052e63a1dd1fd19f
+      size: 10616033
+    - path: data_governance/data/models/vectorizer.pickle
+      hash: md5
+      md5: e9183cc60ebd205912c44a63b99c74d4
+      size: 368037
+    outs:
+    - path: data_governance/data/prepared/train_features.npz
+      hash: md5
+      md5: 0a0a9047cd775709bfc526bd936714e4
+      size: 9832606
+    - path: data_governance/data/prepared/train_target.npy
+      hash: md5
+      md5: bde885dc46d3599be1ef22972ab13d76
+      size: 280128
