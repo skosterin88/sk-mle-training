@@ -130,3 +130,54 @@ stages:
       hash: md5
       md5: 9d82a601e3b13d323f43a922411484a0
       size: 120128
+  train_model:
+    cmd: python3 data_governance/code/models.py 
+      '/data_governance/data/prepared/train_features.npz' 
+      '/data_governance/data/prepared/train_target.npy' 
+      '/data_governance/data/models/model.pickle'
+    deps:
+    - path: data_governance/code/models.py
+      hash: md5
+      md5: 955c86eb6d8d2352705fce7aa37b154f
+      size: 2896
+    - path: data_governance/data/prepared/train_features.npz
+      hash: md5
+      md5: 0a0a9047cd775709bfc526bd936714e4
+      size: 9832606
+    - path: data_governance/data/prepared/train_target.npy
+      hash: md5
+      md5: bde885dc46d3599be1ef22972ab13d76
+      size: 280128
+    outs:
+    - path: data_governance/data/models/model.pickle
+      hash: md5
+      md5: 94bec2a9813bc647f738723e342f7801
+      size: 80730
+  evaluate:
+    cmd: python3 data_governance/code/evaluate.py 
+      '/data_governance/data/prepared/test_features.npz' 
+      '/data_governance/data/prepared/test_target.npy' 
+      '/data_governance/data/models/model.pickle' 
+      '/data_governance/data/metrics/summary.json'
+    deps:
+    - path: data_governance/code/evaluate.py
+      hash: md5
+      md5: 5e55e595745161befabe116f800b9894
+      size: 2008
+    - path: data_governance/data/models/model.pickle
+      hash: md5
+      md5: 94bec2a9813bc647f738723e342f7801
+      size: 80730
+    - path: data_governance/data/prepared/test_features.npz
+      hash: md5
+      md5: 495df2501ee75f11748e5fcbeaeb09c7
+      size: 4172200
+    - path: data_governance/data/prepared/test_target.npy
+      hash: md5
+      md5: 9d82a601e3b13d323f43a922411484a0
+      size: 120128
+    outs:
+    - path: data_governance/data/metrics/summary.json
+      hash: md5
+      md5: f9148c0e74f86659b9a4cb4f22ed9d2d
+      size: 537

@@ -28,3 +28,20 @@ stages:
       outs:
       - data_governance/data/prepared/${item}_features.npz
       - data_governance/data/prepared/${item}_target.npy
+  train_model:
+    cmd: python3 data_governance/code/models.py '/data_governance/data/prepared/train_features.npz' '/data_governance/data/prepared/train_target.npy' '/data_governance/data/models/model.pickle'
+    deps:
+    - data_governance/code/models.py
+    - data_governance/data/prepared/train_features.npz
+    - data_governance/data/prepared/train_target.npy
+    outs:
+    - data_governance/data/models/model.pickle
+  evaluate:
+    cmd: python3 data_governance/code/evaluate.py '/data_governance/data/prepared/test_features.npz' '/data_governance/data/prepared/test_target.npy' '/data_governance/data/models/model.pickle' '/data_governance/data/metrics/summary.json'
+    deps:
+    - data_governance/code/evaluate.py
+    - data_governance/data/prepared/test_features.npz
+    - data_governance/data/prepared/test_target.npy
+    - data_governance/data/models/model.pickle
+    metrics:
+    - data_governance/data/metrics/summary.json
