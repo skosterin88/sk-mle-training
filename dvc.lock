@@ -145,8 +145,8 @@ stages:
     deps:
     - path: data_governance/code/models.py
       hash: md5
-      md5: c0ddfc5da302ed0fd5ed270ada13d93f
-      size: 2452
+      md5: 20f369a983183e89489f8e1b1aba045c
+      size: 1827
     - path: data_governance/data/prepared/train_features.npz
       hash: md5
       md5: 0a0a9047cd775709bfc526bd936714e4
@@ -172,12 +172,13 @@ stages:
       '/data_governance/data/prepared/test_features.npz' 
       '/data_governance/data/prepared/test_target.npy' 
       '/data_governance/data/models/model.pickle' 
-      '/data_governance/data/metrics/summary.json'
+      '/data_governance/data/metrics/summary.json' 
+      '/data_governance/data/metrics/confusion_matrix.png'
     deps:
     - path: data_governance/code/evaluate.py
       hash: md5
-      md5: 5e55e595745161befabe116f800b9894
-      size: 2008
+      md5: 44862a4a66ccb3d8abdc98bd7b3d2734
+      size: 2874
     - path: data_governance/data/models/model.pickle
       hash: md5
       md5: d1b2ad84c7e33605f897d90678519030
@@ -191,6 +192,10 @@ stages:
       md5: 9d82a601e3b13d323f43a922411484a0
       size: 120128
     outs:
+    - path: data_governance/data/metrics/confusion_matrix.png
+      hash: md5
+      md5: 5eb3b8a54e6fafd72eb8c3fd40394d39
+      size: 13226
     - path: data_governance/data/metrics/summary.json
       hash: md5
       md5: 1aa76a38c67a37dac4be6ae42b339f84

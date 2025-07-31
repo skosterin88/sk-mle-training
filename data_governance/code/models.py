@@ -15,28 +15,6 @@ from sklearn.metrics import (confusion_matrix,
                              ConfusionMatrixDisplay, 
                              classification_report)
 
-def conf_matrix(y_true: np.ndarray, pred: np.ndarray) -> Figure:
-    """
-    Generate a confusion matrix figure.
-    
-    Parameters:
-    y_true (np.ndarray): True labels.
-    pred (np.ndarray): Predicted labels.
-    
-    Returns:
-    Figure: A matplotlib figure containing the confusion matrix.
-    """
-    plt.ioff()  # Turn off interactive plotting
-
-    fig, ax = plt.subplots(figsize=(5, 5))
-    ConfusionMatrixDisplay.from_predictions(
-        y_true, pred, ax=ax, colorbar=False, cmap=False)
-    ax.xaxis.set_tick_params(rotation=45)
-    _ = ax.set_title('Confusion Matrix')
-    plt.tight_layout()
-    
-    return fig
-
 def train(data: np.ndarray, target: np.ndarray) -> LogisticRegression:
     """
     Train a logistic regression model.

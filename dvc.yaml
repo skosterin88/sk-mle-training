@@ -45,7 +45,7 @@ stages:
     outs:
     - data_governance/data/models/model.pickle
   evaluate:
-    cmd: python3 data_governance/code/evaluate.py '/data_governance/data/prepared/test_features.npz' '/data_governance/data/prepared/test_target.npy' '/data_governance/data/models/model.pickle' '/data_governance/data/metrics/summary.json'
+    cmd: python3 data_governance/code/evaluate.py '/data_governance/data/prepared/test_features.npz' '/data_governance/data/prepared/test_target.npy' '/data_governance/data/models/model.pickle' '/data_governance/data/metrics/summary.json' '/data_governance/data/metrics/confusion_matrix.png'
     deps:
     - data_governance/code/evaluate.py
     - data_governance/data/prepared/test_features.npz
@@ -53,3 +53,5 @@ stages:
     - data_governance/data/models/model.pickle
     metrics:
     - data_governance/data/metrics/summary.json
+    plots:
+    - data_governance/data/metrics/confusion_matrix.png
