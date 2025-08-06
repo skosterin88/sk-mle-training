@@ -22,10 +22,10 @@ def evaluate(y_pred: pd.DataFrame, y_real: pd.DataFrame, metric: str = 'rmse') -
     metric_value = 10000000.0
 
     if metric == 'mae':
-        metric_value = mean_absolute_error(y_real.values, y_pred.values)
+        metric_value = mean_absolute_error(y_real, y_pred)
     elif metric == 'mape':
-        metric_value = mean_absolute_percentage_error(y_real.values, y_pred.values)
+        metric_value = mean_absolute_percentage_error(y_real, y_pred)
     else:
-        metric_value = root_mean_squared_error(y_real.values, y_pred.values)
+        metric_value = root_mean_squared_error(y_real, y_pred)
     
     return metric_value

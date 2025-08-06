@@ -1,4 +1,4 @@
 import os
 from pathlib import Path
 
-DATA_DIR = Path(Path(os.getcwd()).parent / "data/input")
+DATA_DIR = Path(Path(os.getcwd()) / "data/input")

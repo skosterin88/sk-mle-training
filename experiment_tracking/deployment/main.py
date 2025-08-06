@@ -48,7 +48,7 @@ def run(filename: str,
     X_train, y_train, X_test, y_test = create_X_y(df_train, df_test, features=features, target=target)
 
     if model_name == 'xgb':
-        untrained_model = XGBRegressor()
+        untrained_model = XGBRegressor
 
     model = train_model(untrained_model, X_train, y_train, params)
 
@@ -61,7 +61,7 @@ def run(filename: str,
 
 if __name__ == '__main__':
 
-    filename = 'PJME_hourly.csv.zip'
+    filename = 'PJME_hourly.csv'
     start_date_test = '01-01-2015'
 
     features = ['dayofyear', 
@@ -76,7 +76,6 @@ if __name__ == '__main__':
         'base_score':0.5, 
         'booster':'gbtree',    
         'n_estimators':1000,
-        'early_stopping_rounds':50,
         'objective':'reg:linear',
         'max_depth':3,
         'learning_rate':0.01
