@@ -10,7 +10,7 @@ RUN echo "devuser ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 # RUN chsh -s /bin/zsh devuser
 
 # Copy source files
-# COPY ../requirements.txt /home/devuser/sk-mle-training/
+COPY ../requirements.txt /home/
 
 WORKDIR /home
 
@@ -20,10 +20,11 @@ ENV TERM=xterm
 RUN python3 -m venv /home/devuser/.venv
 ENV PATH="/home/devuser/.venv/bin:$PATH"
 
+RUN echo "source /home/devuser/.venv/bin/activate" >> /home/devuser/.zshrc
 RUN pip install --upgrade pip
 RUN pip install dvc
 RUN sudo chown -R devuser /home
 RUN sudo chmod -R u+rwX /home
-RUN echo "source /home/devuser/.venv/bin/activate" >> /home/devuser/.zshrc
+RUN python3 -m pip install -r requirements.txt
 
 CMD ["zsh"]
