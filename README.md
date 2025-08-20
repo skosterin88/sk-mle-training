@@ -49,5 +49,49 @@ python3 -m main <YOUR_IMAGE_FILE>
 
 After that, the output will be saved into the output.json file in the folder on your host system. 
 
+**data_governance**
 
+This directory contains code and data necessary to run a text analysis task based on a CSV file that gets pulled by DVC from S3. 
 
+To run it, first navigate to the sk-mle-training directory:
+
+```
+cd sk-mle-training
+```
+
+Then build the Docker container using data_governance/Dockerfile:
+
+```
+docker build -rm -f data_governance/Dockerfile -t ubuntu:skosterin88 .
+```
+
+This allows you to create an isolated environment to run your DVC experiments.
+
+After that, run the container and mount there the folder with data:
+
+```
+docker run --rm -it -v `pwd`:/home/shared-volume ubuntu:skosterin88
+```
+
+This will allow you to modify the code using, for example, your Visual Studio Code IDE but run it inside the Docker environment.
+
+When you execute that, run the following command: 
+
+```
+dvc repro
+```
+
+to reproduce the whole pipeline from preprocessing to model evaluation. 
+You can modify model hyperparameters in the data_governance/params.yaml file. Once you do that, run 
+
+```
+dvc repro
+```
+
+once again and then run 
+
+```
+dvc metrics diff
+```
+
+to see how metrics have changed.
