@@ -3,7 +3,7 @@ import sys
 import os
 from pathlib import Path
 
-import click
+# import click
 import nltk
 import polars as pl
 from nltk.corpus import stopwords

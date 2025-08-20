@@ -7,8 +7,8 @@ stages:
     deps:
     - path: data_governance/code/preprocess.py
       hash: md5
-      md5: 0623cd0494b451bef11827eb61a4511a
-      size: 2587
+      md5: b98450e284d2c2d5a0b5a33e6f873535
+      size: 2589
     - path: data_governance/data/input/train.csv
       hash: md5
       md5: 520937107c39a2d1d1f66cd410e9ed9e
@@ -51,36 +51,8 @@ stages:
       size: 10616033
     - path: data_governance/data/models/vectorizer.pickle
       hash: md5
-      md5: e9183cc60ebd205912c44a63b99c74d4
+      md5: 7c4698c5660bffff677a8a934bd489c4
       size: 368037
-  apply_vectorizer:
-    cmd: python3 data_governance/code/apply_vectorizer.py 
-      '/data_governance/data/features/train.parquet' 
-      '/data_governance/data/models/vectorizer.pickle' 
-      '/data_governance/data/prepared/train_features.npz' 
-      '/data_governance/data/prepared/train_target.npy'
-    deps:
-    - path: data_governance/code/apply_vectorizer.py
-      hash: md5
-      md5: ef0bf328a07833e6115430953ad6beb9
-      size: 1257
-    - path: data_governance/data/features/train.parquet
-      hash: md5
-      md5: 017791b0b71d9b7e052e63a1dd1fd19f
-      size: 10616033
-    - path: data_governance/data/models/vectorizer.pickle
-      hash: md5
-      md5: e9183cc60ebd205912c44a63b99c74d4
-      size: 368037
-    outs:
-    - path: data_governance/data/prepared/train_features.npz
-      hash: md5
-      md5: 0a0a9047cd775709bfc526bd936714e4
-      size: 9832606
-    - path: data_governance/data/prepared/train_target.npy
-      hash: md5
-      md5: bde885dc46d3599be1ef22972ab13d76
-      size: 280128
   apply_vectorizer@train:
     cmd: python3 data_governance/code/apply_vectorizer.py 
       '/data_governance/data/features/train.parquet' 
@@ -98,7 +70,7 @@ stages:
       size: 10616033
     - path: data_governance/data/models/vectorizer.pickle
       hash: md5
-      md5: e9183cc60ebd205912c44a63b99c74d4
+      md5: 7c4698c5660bffff677a8a934bd489c4
       size: 368037
     outs:
     - path: data_governance/data/prepared/train_features.npz
@@ -126,7 +98,7 @@ stages:
       size: 4539504
     - path: data_governance/data/models/vectorizer.pickle
       hash: md5
-      md5: e9183cc60ebd205912c44a63b99c74d4
+      md5: 7c4698c5660bffff677a8a934bd489c4
       size: 368037
     outs:
     - path: data_governance/data/prepared/test_features.npz
@@ -160,12 +132,12 @@ stages:
         logistic_regression:
           multi_class: multinomial
           solver: saga
-          C: 1.5
+          C: 2.0
           random_state: 42
     outs:
     - path: data_governance/data/models/model.pickle
       hash: md5
-      md5: cbe1eac8e1b2ccfb5a8d701a0005f0c1
+      md5: d1b2ad84c7e33605f897d90678519030
       size: 80730
   evaluate:
     cmd: python3 data_governance/code/evaluate.py 
@@ -181,7 +153,7 @@ stages:
       size: 2874
     - path: data_governance/data/models/model.pickle
       hash: md5
-      md5: cbe1eac8e1b2ccfb5a8d701a0005f0c1
+      md5: d1b2ad84c7e33605f897d90678519030
       size: 80730
     - path: data_governance/data/prepared/test_features.npz
       hash: md5
@@ -194,9 +166,9 @@ stages:
     outs:
     - path: data_governance/data/metrics/confusion_matrix.png
       hash: md5
-      md5: 2a43d441b38d5294fe1e26a92cdec661
-      size: 13127
+      md5: 5eb3b8a54e6fafd72eb8c3fd40394d39
+      size: 13226
     - path: data_governance/data/metrics/summary.json
       hash: md5
-      md5: 36c2fa6c2e23ac0f5e1b52e3e48dba4c
-      size: 537
+      md5: 1aa76a38c67a37dac4be6ae42b339f84
+      size: 536

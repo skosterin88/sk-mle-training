@@ -4,7 +4,7 @@ vectorizer_tfidf:
 logistic_regression:
   multi_class: "multinomial"
   solver: "saga"
-  C: 1.5
+  C: 2.0
   random_state: 42
 random_state: 42
 test_train_split: 0.3
