@@ -132,12 +132,12 @@ stages:
         logistic_regression:
           multi_class: multinomial
           solver: saga
-          C: 2.0
+          C: 1.0
           random_state: 42
     outs:
     - path: data_governance/data/models/model.pickle
       hash: md5
-      md5: d1b2ad84c7e33605f897d90678519030
+      md5: 94bec2a9813bc647f738723e342f7801
       size: 80730
   evaluate:
     cmd: python3 data_governance/code/evaluate.py 
@@ -153,7 +153,7 @@ stages:
       size: 2874
     - path: data_governance/data/models/model.pickle
       hash: md5
-      md5: d1b2ad84c7e33605f897d90678519030
+      md5: 94bec2a9813bc647f738723e342f7801
       size: 80730
     - path: data_governance/data/prepared/test_features.npz
       hash: md5
@@ -166,9 +166,9 @@ stages:
     outs:
     - path: data_governance/data/metrics/confusion_matrix.png
       hash: md5
-      md5: 5eb3b8a54e6fafd72eb8c3fd40394d39
-      size: 13226
+      md5: 7317542d49d0402f4f4514af9929d4dc
+      size: 13227
     - path: data_governance/data/metrics/summary.json
       hash: md5
-      md5: 1aa76a38c67a37dac4be6ae42b339f84
-      size: 536
+      md5: f9148c0e74f86659b9a4cb4f22ed9d2d
+      size: 537
