@@ -3,4 +3,4 @@ from pathlib import Path
 
 DATA_DIR = Path(Path(os.getcwd()) / "experiment_tracking/data/input")
 MLFLOW_HOST = "localhost"
-MLFLOW_PORT = "8080"
+MLFLOW_PORT = "5000"
