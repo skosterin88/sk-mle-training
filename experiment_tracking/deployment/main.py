@@ -4,10 +4,13 @@ from pathlib import Path
 
 sys.path.append(os.getcwd())
 
+import mlflow
+from mlflow.models import infer_signature
+
 import pandas as pd
 from xgboost import XGBRegressor
 
-from constants import DATA_DIR
+from constants import DATA_DIR, MLFLOW_HOST, MLFLOW_PORT
 from data_loader import read_data
 from data_preprocessing import create_features, train_test_split
 from data_modeling import create_X_y, train_model, get_model_predictions
@@ -51,6 +54,19 @@ def run(filename: str,
         untrained_model = XGBRegressor
 
     model = train_model(untrained_model, X_train, y_train, params)
+    
+    # Log model to MLflow
+    model_info = mlflow.sklearn.log_model(sk_model=model, 
+                             name="model", 
+                             signature=infer_signature(X_train, model.predict(X_train)),
+                             input_example=X_train.head(3),
+                             registered_model_name="xgb")   
+
+    model_tags = {"Training Info": "Basic model with default hyperparameters", 
+                    "Features": str(features), 
+                    "Model Type": model_name}
+
+    mlflow.set_logged_model_tags(model_info.model_id, model_tags) 
 
     y_pred = get_model_predictions(model, X_test)
 
@@ -60,6 +76,12 @@ def run(filename: str,
 
 
 if __name__ == '__main__':
+
+    # Set MLflow tracking URI for logging
+    mlflow.set_tracking_uri(f"http://{MLFLOW_HOST}:{MLFLOW_PORT}")
+
+    # Create an experiment
+    mlflow.set_experiment("sk_mle_training_experiment_tracking")
 
     filename = 'PJME_hourly.csv'
     start_date_test = '01-01-2015'
@@ -84,12 +106,23 @@ if __name__ == '__main__':
     model_name = 'xgb'
     metric = 'rmse'
 
-    y_pred, metric_value = run(filename, 
+    with mlflow.start_run():
+
+        mlflow.log_params(params)
+        mlflow.log_param('model_name', model_name)
+        mlflow.log_param('features', features)
+        mlflow.log_param('target', target)
+        mlflow.log_param('start_date_test', start_date_test)
+        mlflow.log_param('metric', metric)
+
+        y_pred, metric_value = run(filename, 
                                start_date_test, 
                                features, 
                                target, 
                                model_name=model_name, 
                                params=params,
                                metric=metric)
+        
+        mlflow.log_metric(metric, metric_value)
     
-    print(f'{metric.upper()} == {metric_value}')
+        print(f'{metric.upper()} == {metric_value}')

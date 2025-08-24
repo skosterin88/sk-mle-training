@@ -1,0 +1,12 @@
+mlartifacts/
+mlruns/
+myvenv/
+__pycache__/
+*.pyc
+.DS_Store
+.ipynb_checkpoints
+.vscode/
+experiment_tracking/data/input/
+.dvc/cache/
+.dvc/tmp/
+data_governance/
