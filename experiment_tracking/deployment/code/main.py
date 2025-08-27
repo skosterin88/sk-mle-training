@@ -78,7 +78,7 @@ def run(filename: str,
 if __name__ == '__main__':
 
     # Set MLflow tracking URI for logging
-    mlflow.set_tracking_uri(f"http://{MLFLOW_HOST}:{MLFLOW_PORT}")
+    mlflow.set_tracking_uri(os.getenv('MLFLOW_TRACKING_URI', f'http://{MLFLOW_HOST}:{MLFLOW_PORT}'))
 
     # Create an experiment
     mlflow.set_experiment("sk_mle_training_experiment_tracking")
@@ -97,7 +97,7 @@ if __name__ == '__main__':
     params = {
         'base_score':0.5, 
         'booster':'gbtree',    
-        'n_estimators':1000,
+        'n_estimators':100,
         'objective':'reg:linear',
         'max_depth':3,
         'learning_rate':0.01

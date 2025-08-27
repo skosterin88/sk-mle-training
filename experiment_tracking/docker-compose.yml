@@ -1,0 +1,31 @@
+services:
+  # Define your services here
+  mlflow:
+    build: ./deployment/mlflow_server
+    container_name: mlflow_server
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow_backend:/mlflow/backend
+      - mlflow_artifacts:/mlartifacts
+    restart: unless-stopped
+    
+  devbox:
+    build: ./deployment/devbox
+    container_name: devbox
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/workspace
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    depends_on:
+      - mlflow
+    stdin_open: true
+    tty: true
+
+volumes:
+  mlflow_artifacts:
+    driver: local
+  mlflow_backend:
+    driver: local
