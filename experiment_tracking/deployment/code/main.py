@@ -9,6 +9,7 @@ from mlflow.models import infer_signature
 
 import pandas as pd
 from xgboost import XGBRegressor
+from lightgbm import LGBMRegressor
 
 from constants import DATA_DIR, MLFLOW_HOST, MLFLOW_PORT
 from data_loader import read_data
@@ -52,7 +53,11 @@ def run(filename: str,
 
     if model_name == 'xgb':
         untrained_model = XGBRegressor
-
+    elif model_name == 'lgbm':
+        untrained_model = LGBMRegressor
+    else:
+        raise NotImplementedError(f'Model {model_name} is not implemented.')
+    
     model = train_model(untrained_model, X_train, y_train, params)
     
     # Log model to MLflow
@@ -60,7 +65,7 @@ def run(filename: str,
                              name="model", 
                              signature=infer_signature(X_train, model.predict(X_train)),
                              input_example=X_train.head(3),
-                             registered_model_name="xgb")   
+                             registered_model_name=model_name)   
 
     model_tags = {"Training Info": "Basic model with default hyperparameters", 
                     "Features": str(features), 
@@ -87,23 +92,39 @@ if __name__ == '__main__':
     start_date_test = '01-01-2015'
 
     features = ['dayofyear', 
+                'dayofmonth', 
+                'weekofyear',
                 'hour', 
                 'dayofweek', 
                 'quarter', 
                 'month', 
-                'year']
+                ]
     target = 'PJME_MW'
 
-    params = {
-        'base_score':0.5, 
-        'booster':'gbtree',    
-        'n_estimators':100,
-        'objective':'reg:linear',
-        'max_depth':3,
-        'learning_rate':0.01
+    dict_models_params = {
+        'xgb': {
+            'base_score':0.5, 
+            'booster':'gbtree',    
+            'n_estimators':500,
+            'objective':'reg:linear',
+            'max_depth':5,
+            'learning_rate':0.01
+        },
+        'lgbm': {
+            'boosting_type': 'gbdt',
+            'objective': 'regression',
+            'n_estimators': 500,
+            'learning_rate': 0.05,
+            'max_depth': 3,
+            'colsample_bytree': 0.5,
+            'reg_alpha': 0.5,
+            'reg_lambda': 0.5
+        }
     }
 
-    model_name = 'xgb'
+    model_name = 'lgbm'
+    params = dict_models_params[model_name]
+
     metric = 'rmse'
 
     with mlflow.start_run():

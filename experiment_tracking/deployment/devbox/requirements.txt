@@ -5,3 +5,4 @@ scikit-learn
 psutil
 boto3
 xgboost
+lightgbm
